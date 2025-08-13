@@ -89,7 +89,7 @@ This pipeline demonstrates **knowledge distillation** - a technique where a larg
 
 ### **Knowledge Distillation Process:**
 1. **Question Generation**: GPT-4o-mini creates domain-specific questions from Kubernetes v1.28 documentation
-2. **Baseline Assessment**: Untrained Phi-2 (Hugging Face `microsoft/phi-2`) generates initial answers for performance baseline
+2. **Baseline Assessment**: Untrained Phi-2 generates initial answers for performance baseline
 3. **Reference Creation**: GPT-4o-mini provides expert-level reference answers
 4. **Fine-tuning**: Phi-2 learns from teacher responses using QLoRA with 4-bit quantization, **updating its internal weights**
 5. **Performance Evaluation**: RAGAS framework measures improvement in answer quality
@@ -113,6 +113,146 @@ This pipeline demonstrates **knowledge distillation** - a technique where a larg
 - **Custom Scoring**: Domain-specific relevancy assessment
 - **Comparative Analysis**: Baseline vs fine-tuned performance metrics
 - **Statistical Validation**: Confidence intervals and improvement significance
+
+## 📊 Pipeline Architecture Diagrams
+
+### **1. Complete Pipeline Flow**
+
+```mermaid
+flowchart TD
+    A[User Clicks Start Pipeline] --> B[Load Configuration]
+    B --> C[Load Kubernetes v1.28 Knowledge Base]
+    C --> D[Generate Questions using GPT-4o-mini]
+    D --> E[Save Questions Checkpoint]
+    
+    E --> F[Load Phi-2 Model 4-bit QLoRA]
+    F --> G[Generate Baseline Answers with Untrained Phi-2]
+    G --> H[Save Baseline Answers Checkpoint]
+    
+    H --> I[Generate Reference Answers using GPT-4o-mini]
+    I --> J[Save Reference Answers Checkpoint]
+    
+    J --> K[Evaluate Baseline Answers using RAGAS]
+    K --> L[Calculate Answer Relevancy Score]
+    L --> M[Save Baseline Evaluation Checkpoint]
+    
+    M --> N{Fine-tuning Enabled?}
+    N -->|Yes| O[Prepare Training Dataset]
+    N -->|No| X[Skip to Fine-tuned Evaluation]
+    
+    O --> P[Configure QLoRA Parameters]
+    P --> Q[Fine-tune Phi-2 with QLoRA]
+    Q --> R[Save Fine-tuned Adapter]
+    R --> S[Fine-tuning Complete]
+    
+    S --> T[Load Fine-tuned Phi-2 Model]
+    T --> U[Generate Fine-tuned Answers]
+    U --> V[Save Fine-tuned Answers]
+    
+    X --> W[Evaluate Fine-tuned Answers using RAGAS]
+    V --> W
+    W --> Y[Calculate Fine-tuned Relevancy Score]
+    Y --> Z[Save Fine-tuned Evaluation Checkpoint]
+    
+    Z --> AA[Compare Baseline vs Fine-tuned Performance]
+    AA --> BB[Calculate Improvement Metrics]
+    BB --> CC[Save Complete Cycle Results]
+    
+    CC --> DD{More Cycles Remaining?}
+    DD -->|Yes| EE[Start Next Cycle]
+    DD -->|No| FF[Pipeline Complete]
+    
+    EE --> D
+    
+    FF --> GG[Display Final Results]
+    GG --> HH[Show Performance Comparison]
+    HH --> II[Display Improvement Statistics]
+    II --> JJ[Show Sample Q&A Pairs]
+    
+    classDef startEnd fill:#e1f5fe,stroke:#01579b,stroke-width:2px
+    classDef process fill:#f3e5f5,stroke:#4a148c,stroke-width:2px
+    classDef decision fill:#fff3e0,stroke:#e65100,stroke-width:2px
+    classDef save fill:#e8f5e8,stroke:#1b5e20,stroke-width:2px
+    classDef model fill:#fce4ec,stroke:#880e4f,stroke-width:2px
+    classDef evaluation fill:#e0f2f1,stroke:#004d40,stroke-width:2px
+    
+    class A,FF startEnd
+    class B,C,D,G,I,K,L,O,P,Q,S,T,U,W,Y,AA,BB,EE process
+    class N,DD decision
+    class E,H,J,M,R,V,Z,CC save
+    class F model
+    class K,L,W,Y evaluation
+```
+
+### **2. Memory Management Strategy**
+
+```mermaid
+flowchart TD
+    A[Start Pipeline] --> B{Check Available GPU Memory}
+    B -->|>4GB| C[Use GPU Mode]
+    B -->|<4GB| D[Use CPU Mode]
+    
+    C --> E[Load Phi-2 with 4-bit QLoRA]
+    D --> F[Load Phi-2 on CPU]
+    
+    E --> G[Generate Answers]
+    F --> G
+    
+    G --> H[Clear GPU Memory]
+    H --> I[Garbage Collection]
+    I --> J[Save Results]
+    
+    J --> K{More Operations?}
+    K -->|Yes| B
+    K -->|No| L[Pipeline Complete]
+    
+    classDef decision fill:#fff3e0,stroke:#e65100,stroke-width:2px
+    classDef process fill:#f3e5f5,stroke:#4a148c,stroke-width:2px
+    classDef memory fill:#e8f5e8,stroke:#1b5e20,stroke-width:2px
+    
+    class B,K decision
+    class A,C,D,E,F,G,J,L process
+    class H,I memory
+```
+
+### **3. Knowledge Distillation Process**
+
+```mermaid
+flowchart LR
+    subgraph "Teacher Model (GPT-4o-mini)"
+        T1[Domain Knowledge]
+        T2[Expert Answers]
+        T3[High Quality]
+    end
+    
+    subgraph "Knowledge Transfer"
+        K1[Question Generation]
+        K2[Reference Answers]
+        K3[Training Data]
+    end
+    
+    subgraph "Student Model (Phi-2)"
+        S1[Baseline Performance]
+        S2[Fine-tuned Weights]
+        S3[Improved Answers]
+    end
+    
+    T1 --> K1
+    T2 --> K2
+    K1 --> K3
+    K2 --> K3
+    K3 --> S2
+    S1 --> S2
+    S2 --> S3
+    
+    classDef teacher fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+    classDef transfer fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
+    classDef student fill:#e8f5e8,stroke:#388e3c,stroke-width:2px
+    
+    class T1,T2,T3 teacher
+    class K1,K2,K3 transfer
+    class S1,S2,S3 student
+```
 
 ## 🚀 Quick Setup Guide
 
