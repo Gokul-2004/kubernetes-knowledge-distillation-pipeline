@@ -1,4 +1,4 @@
-# 🤖 Kubernetes v1.28 Knowledge Distillation Pipeline
+# 🤖 Kubernetes Knowledge Distillation Pipeline
 
 A complete vertical knowledge distillation pipeline that transfers knowledge from GPT-4o-mini (teacher) to Phi-2 (student) model, specifically designed for Kubernetes v1.28 documentation.
 
