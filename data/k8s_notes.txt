@@ -1,0 +1,18 @@
+Kubernetes v1.28 (Planternetes) introduces 45 enhancements, including:
+
+- Expanded version skew policy: Node components can now be up to three minor versions behind control plane components, simplifying upgrades.
+- Recovery from non-graceful node shutdown is now generally available, improving failover for stateful workloads.
+- Improvements to CustomResourceDefinition (CRD) validation rules using Common Expression Language (CEL), allowing more complex validation without webhooks.
+- ValidatingAdmissionPolicies graduate to beta, enabling in-process validation of API requests.
+- Beta support for enabling swap space on Linux nodes, allowing controlled use of swap memory.
+- Mixed version proxy (alpha): API servers at different versions can proxy requests to compatible peers during upgrades.
+- Source code reorganization for control plane components, making kube-apiserver more modular.
+- Support for CDI injection into containers (alpha), enabling complex device injection.
+- API awareness of sidecar containers (alpha), introducing a restartPolicy for init containers to support sidecars.
+- Automatic, retroactive assignment of a default StorageClass for PersistentVolumeClaims (PVCs) is now stable.
+- Pod replacement policy for Jobs (alpha): Control when replacement pods are created during termination.
+- Job retry backoff limit per index (alpha): Allows per-index backoff limits for indexed jobs.
+- Several features graduated to stable, including kubectl events, non-graceful node shutdown, expanded DNS configuration, and more.
+- Deprecations: Removal of CSI Migration for GCE PD, Ceph RBD and Ceph FS in-tree plugins deprecated.
+
+Kubernetes v1.28 continues to improve reliability, upgradeability, and extensibility for cloud-native workloads. 
