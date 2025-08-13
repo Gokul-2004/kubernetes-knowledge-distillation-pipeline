@@ -169,12 +169,12 @@ flowchart TD
     HH --> II[Display Improvement Statistics]
     II --> JJ[Show Sample Q&A Pairs]
     
-    classDef startEnd fill:#e1f5fe,stroke:#01579b,stroke-width:2px
-    classDef process fill:#f3e5f5,stroke:#4a148c,stroke-width:2px
-    classDef decision fill:#fff3e0,stroke:#e65100,stroke-width:2px
-    classDef save fill:#e8f5e8,stroke:#1b5e20,stroke-width:2px
-    classDef model fill:#fce4ec,stroke:#880e4f,stroke-width:2px
-    classDef evaluation fill:#e0f2f1,stroke:#004d40,stroke-width:2px
+    classDef startEnd fill:#2E8B57,stroke:#000000,stroke-width:3px,color:#FFFFFF
+    classDef process fill:#4682B4,stroke:#000000,stroke-width:2px,color:#FFFFFF
+    classDef decision fill:#FF8C00,stroke:#000000,stroke-width:3px,color:#FFFFFF
+    classDef save fill:#32CD32,stroke:#000000,stroke-width:2px,color:#FFFFFF
+    classDef model fill:#8A2BE2,stroke:#000000,stroke-width:2px,color:#FFFFFF
+    classDef evaluation fill:#DC143C,stroke:#000000,stroke-width:2px,color:#FFFFFF
     
     class A,FF startEnd
     class B,C,D,G,I,K,L,O,P,Q,S,T,U,W,Y,AA,BB,EE process
@@ -206,9 +206,9 @@ flowchart TD
     K -->|Yes| B
     K -->|No| L[Pipeline Complete]
     
-    classDef decision fill:#fff3e0,stroke:#e65100,stroke-width:2px
-    classDef process fill:#f3e5f5,stroke:#4a148c,stroke-width:2px
-    classDef memory fill:#e8f5e8,stroke:#1b5e20,stroke-width:2px
+    classDef decision fill:#FF8C00,stroke:#000000,stroke-width:3px,color:#FFFFFF
+    classDef process fill:#4682B4,stroke:#000000,stroke-width:2px,color:#FFFFFF
+    classDef memory fill:#32CD32,stroke:#000000,stroke-width:2px,color:#FFFFFF
     
     class B,K decision
     class A,C,D,E,F,G,J,L process
@@ -245,9 +245,9 @@ flowchart LR
     S1 --> S2
     S2 --> S3
     
-    classDef teacher fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
-    classDef transfer fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
-    classDef student fill:#e8f5e8,stroke:#388e3c,stroke-width:2px
+    classDef teacher fill:#2E8B57,stroke:#000000,stroke-width:2px,color:#FFFFFF
+    classDef transfer fill:#8A2BE2,stroke:#000000,stroke-width:2px,color:#FFFFFF
+    classDef student fill:#DC143C,stroke:#000000,stroke-width:2px,color:#FFFFFF
     
     class T1,T2,T3 teacher
     class K1,K2,K3 transfer
