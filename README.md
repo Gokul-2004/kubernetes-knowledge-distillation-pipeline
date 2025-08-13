@@ -2,6 +2,23 @@
 
 A complete vertical knowledge distillation pipeline that transfers knowledge from GPT-4o-mini (teacher) to Phi-2 (student) model, specifically designed for Kubernetes v1.28 documentation.
 
+## 📚 Research Foundation
+
+This pipeline is based on the **foundational research paper** on knowledge distillation:
+
+**"Distilling the Knowledge in a Neural Network"** (2015)
+- **Authors**: Geoffrey Hinton, Oriol Vinyals, Jeff Dean (Google Brain)
+- **Paper**: [arXiv:1503.02531](https://arxiv.org/abs/1503.02531)
+- **Concept**: Large teacher models transfer knowledge to smaller student models through soft targets and probability distributions
+
+Our implementation adapts this concept for **domain-specific knowledge transfer** in Kubernetes v1.28, using modern techniques like QLoRA and 4-bit quantization.
+
+### **Academic References:**
+- **Hinton et al. (2015)**: [Distilling the Knowledge in a Neural Network](https://arxiv.org/abs/1503.02531)
+- **Dettmers et al. (2023)**: [QLoRA: Efficient Finetuning of Quantized LLMs](https://arxiv.org/abs/2305.14314)
+- **Microsoft Phi-2**: [Phi-2: The Unintended Capability of Small Language Models](https://arxiv.org/abs/2312.07738)
+- **RAGAS**: [RAGAS: Automated Evaluation of Retrieval Augmented Generation](https://arxiv.org/abs/2309.15217)
+
 ## 🎯 What This Project Does
 
 This pipeline demonstrates **knowledge distillation** - a technique where a large, powerful model (GPT-4o-mini) teaches a smaller, efficient model (Phi-2) to perform better on specific tasks. In this case, we're teaching Phi-2 to answer Kubernetes v1.28 questions more accurately.
@@ -15,13 +32,94 @@ This pipeline demonstrates **knowledge distillation** - a technique where a larg
 6. **Re-evaluate** to see improvement
 7. **Compare Results** - baseline vs fine-tuned
 
+## 🛠️ Technologies & Tools Used
+
+### **Core Machine Learning:**
+- **PyTorch**: Deep learning framework for model operations
+- **Transformers (Hugging Face)**: Pre-trained model loading and fine-tuning
+- **TRL (Transformer Reinforcement Learning)**: SFTTrainer for supervised fine-tuning
+- **BitsAndBytes**: 4-bit quantization for memory efficiency
+
+### **Models:**
+- **Teacher Model**: OpenAI GPT-4o-mini (via OpenAI API)
+- **Student Model**: Microsoft Phi-2 (2.7B parameters) from Hugging Face Hub
+- **Quantization**: 4-bit QLoRA (Quantized Low-Rank Adaptation)
+- **Model Source**: `microsoft/phi-2` from Hugging Face Transformers library
+
+### **Fine-tuning & Training:**
+- **QLoRA**: Low-Rank Adaptation for efficient fine-tuning
+- **PEFT**: Parameter-Efficient Fine-Tuning library
+- **LoRA**: Low-Rank Adaptation matrices
+- **Gradient Accumulation**: Memory-efficient training
+- **Weight Updates**: Direct modification of Phi-2 model weights through fine-tuning
+
+### **Evaluation & Metrics:**
+- **RAGAS**: Retrieval Augmented Generation Assessment
+- **Custom Metrics**: Answer quality and relevancy scoring
+- **Performance Comparison**: Baseline vs fine-tuned analysis
+
+### **Web Interface:**
+- **Gradio**: Modern web UI framework for ML applications
+- **Real-time Updates**: Live progress tracking and status updates
+- **Interactive Controls**: Dynamic topic selection and parameter adjustment
+
+### **Memory Management:**
+- **CUDA Memory Optimization**: Aggressive cache clearing and defragmentation
+- **CPU Fallback**: Automatic fallback when GPU memory is insufficient
+- **Process Restart**: Memory reset mechanisms for severe fragmentation
+
+### **Data Processing:**
+- **OpenAI API**: Question generation and reference answer creation
+- **Text Processing**: Prompt engineering and response formatting
+- **Alpaca Format**: Training data preparation for SFTTrainer
+
+### **Development & Testing:**
+- **Python 3.8+**: Core programming language
+- **Virtual Environments**: Isolated dependency management
+- **Git**: Version control and repository management
+- **Requirements Management**: pip and requirements.txt
+
+### **System Optimization:**
+- **4-bit Quantization**: Memory-efficient model loading
+- **Mixed Precision**: FP16 training where possible
+- **Gradient Checkpointing**: Memory optimization during training
+- **Dynamic Batching**: Adaptive batch sizes based on available memory
+
+## 🔬 Key Techniques & Methodologies
+
+### **Knowledge Distillation Process:**
+1. **Question Generation**: GPT-4o-mini creates domain-specific questions from Kubernetes v1.28 documentation
+2. **Baseline Assessment**: Untrained Phi-2 (Hugging Face `microsoft/phi-2`) generates initial answers for performance baseline
+3. **Reference Creation**: GPT-4o-mini provides expert-level reference answers
+4. **Fine-tuning**: Phi-2 learns from teacher responses using QLoRA with 4-bit quantization, **updating its internal weights**
+5. **Performance Evaluation**: RAGAS framework measures improvement in answer quality
+6. **Iterative Refinement**: Multiple cycles for continuous improvement
+7. **Weight Persistence**: Fine-tuned weights are saved as PEFT adapters for future use
+
+### **Memory Optimization Strategies:**
+- **4-bit QLoRA**: Reduces memory footprint by ~75% compared to 16-bit
+- **Gradient Checkpointing**: Trades compute for memory during training
+- **Dynamic Memory Management**: Automatic GPU memory clearing and CPU fallback
+- **Process Restart Mechanisms**: Handles severe memory fragmentation scenarios
+
+### **Training Configuration:**
+- **Learning Rate**: Adaptive learning rate scheduling
+- **Batch Size**: Dynamic adjustment based on available memory
+- **Gradient Accumulation**: Effective larger batch sizes with limited memory
+- **Early Stopping**: Prevents overfitting with validation metrics
+
+### **Evaluation Framework:**
+- **RAGAS Metrics**: Industry-standard evaluation for answer quality
+- **Custom Scoring**: Domain-specific relevancy assessment
+- **Comparative Analysis**: Baseline vs fine-tuned performance metrics
+- **Statistical Validation**: Confidence intervals and improvement significance
+
 ## 🚀 Quick Setup Guide
 
 ### Step 1: Clone the Repository
 ```bash
-git clone https://github.com/atheno-ai/data-prep.git
-cd data-prep
-git checkout final-repo
+git clone https://github.com/Gokul-2004/kubernetes-knowledge-distillation-pipeline.git
+cd kubernetes-knowledge-distillation-pipeline
 ```
 
 ### Step 2: Set Up Python Environment
@@ -157,7 +255,7 @@ python run_ui.py --port 7861
 ## 📁 Project Structure
 
 ```
-data-prep/
+kubernetes-knowledge-distillation-pipeline/
 ├── pipeline/                 # Core pipeline code
 │   ├── config.py            # Configuration settings
 │   ├── main_pipeline.py     # Main orchestrator
